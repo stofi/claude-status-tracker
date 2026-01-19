@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/stofi/claude-status-tracker/compare/v1.0.1...v1.0.2) (2026-01-19)
+
+
+### Bug Fixes
+
+* remove duplicate hooks reference from plugin.json ([8d36a67](https://github.com/stofi/claude-status-tracker/commit/8d36a677f7527704d1de038a4f14cc5497b9b7ac))
+
 ## [1.0.1](https://github.com/stofi/claude-status-tracker/compare/v1.0.0...v1.0.1) (2026-01-19)
 
 
