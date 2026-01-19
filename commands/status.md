@@ -1,12 +1,13 @@
 ---
 description: Show Claude Code session status and statistics
+allowed-tools: ["Bash"]
 ---
 
 Display current session status and statistics from the Claude Status Tracker.
 
-Run the command: `claude-status-tracker status $ARGUMENTS`
+Run: `claude-status-tracker status $ARGUMENTS`
 
-This shows:
+Shows:
 - Last recorded activity
 - Total events today
 - Events by type breakdown
