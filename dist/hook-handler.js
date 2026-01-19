@@ -34,20 +34,8 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-const client_1 = require("./generated/prisma/client");
-const adapter_better_sqlite3_1 = require("@prisma/adapter-better-sqlite3");
+const db_1 = require("./db");
 const path = __importStar(require("path"));
-const os = __importStar(require("os"));
-const fs = __importStar(require("fs"));
-// Database stored in user's home directory for persistence across projects
-const dataDir = path.join(os.homedir(), ".claude-status-tracker");
-const dbPath = path.join(dataDir, "events.db");
-// Ensure data directory exists
-if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-}
-const adapter = new adapter_better_sqlite3_1.PrismaBetterSqlite3({ url: `file:${dbPath}` });
-const prisma = new client_1.PrismaClient({ adapter });
 async function main() {
     const eventType = process.argv[2];
     if (!eventType) {
@@ -160,7 +148,7 @@ async function main() {
             action = `Unknown event: ${eventType}`;
     }
     try {
-        await prisma.event.create({
+        await db_1.prisma.event.create({
             data: {
                 eventType,
                 project,
@@ -178,7 +166,7 @@ async function main() {
         process.exit(1);
     }
     finally {
-        await prisma.$disconnect();
+        await db_1.prisma.$disconnect();
     }
 }
 main();

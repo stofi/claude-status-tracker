@@ -1,15 +1,5 @@
 #!/usr/bin/env node
-import { PrismaClient } from "./generated/prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import * as path from "path";
-import * as os from "os";
-
-// Database stored in user's home directory for persistence across projects
-const dataDir = path.join(os.homedir(), ".claude-status-tracker");
-const dbPath = path.join(dataDir, "events.db");
-
-const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
-const prisma = new PrismaClient({ adapter });
+import { prisma } from "./db";
 
 interface Options {
   limit: number;

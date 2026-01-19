@@ -1,21 +1,6 @@
 #!/usr/bin/env node
-import { PrismaClient } from "./generated/prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { prisma } from "./db";
 import * as path from "path";
-import * as os from "os";
-import * as fs from "fs";
-
-// Database stored in user's home directory for persistence across projects
-const dataDir = path.join(os.homedir(), ".claude-status-tracker");
-const dbPath = path.join(dataDir, "events.db");
-
-// Ensure data directory exists
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
-
-const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
-const prisma = new PrismaClient({ adapter });
 
 // Hook input format from Claude Code plugin system
 interface HookInput {
