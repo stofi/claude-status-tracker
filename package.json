@@ -6,6 +6,12 @@
   "bin": {
     "claude-status-tracker": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "hooks",
+    "commands",
+    "prisma"
+  ],
   "scripts": {
     "build": "tsc && npm run db:setup",
     "db:setup": "node dist/setup-db.js",
@@ -34,9 +40,12 @@
   },
   "type": "commonjs",
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/git": "^10.0.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^25.0.9",
     "prisma": "^7.2.0",
+    "semantic-release": "^24.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
