@@ -36,7 +36,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kurishutofu/claude-status-tracker"
+    "url": "https://github.com/stofi/claude-status-tracker"
   },
   "type": "commonjs",
   "devDependencies": {
