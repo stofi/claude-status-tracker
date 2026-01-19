@@ -13,9 +13,8 @@
     "prisma"
   ],
   "scripts": {
-    "build": "tsc && npm run db:setup",
+    "build": "prisma generate && tsc && npm run db:setup",
     "db:setup": "node dist/setup-db.js",
-    "postinstall": "prisma generate",
     "hook": "ts-node src/hook-handler.ts",
     "recent": "ts-node src/recent.ts",
     "status": "ts-node src/status.ts",
