@@ -1,6 +1,6 @@
 {
   "name": "claude-status-tracker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Track Claude Code activity and events to a local SQLite database for monitoring and automation",
   "main": "dist/cli.js",
   "bin": {

@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/stofi/claude-status-tracker/compare/v1.1.0...v1.1.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* remove postinstall script for global installation ([8ee60cc](https://github.com/stofi/claude-status-tracker/commit/8ee60cc2cac5e45547f321bdc7948c5bf5bfc9bd))
+
 # [1.1.0](https://github.com/stofi/claude-status-tracker/compare/v1.0.2...v1.1.0) (2026-01-19)
 
 
