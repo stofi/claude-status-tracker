@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/stofi/claude-status-tracker/compare/v1.0.2...v1.1.0) (2026-01-19)
+
+
+### Features
+
+* require global CLI installation ([71c14cc](https://github.com/stofi/claude-status-tracker/commit/71c14cc3df4904ca52cae4b071b5ce22c99a32d3))
+
 ## [1.0.2](https://github.com/stofi/claude-status-tracker/compare/v1.0.1...v1.0.2) (2026-01-19)
 
 
