@@ -7,7 +7,7 @@ module.exports = {
     ['@semantic-release/npm', { npmPublish: false }],
     '@semantic-release/github',
     ['@semantic-release/git', {
-      assets: ['package.json', 'CHANGELOG.md'],
+      assets: ['package.json', 'CHANGELOG.md', 'dist/**'],
       message: 'chore(release): ${nextRelease.version}'
     }]
   ]

@@ -1,8 +1,7 @@
 # Dependencies
 node_modules/
 
-# Build output (built via CI)
-dist/
+# Build output is committed (needed for plugin installation)
 
 # Environment variables (secrets)
 .env
