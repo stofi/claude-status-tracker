@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  eventType String   // prompt, pre-tool, stop, session-start, session-end
+  project   String
+  tool      String?  // For pre-tool events: Bash, Write, Edit, Read, etc.
+  action    String   // Human-readable action description
+  detail    String?  // Additional details (command, file path, pattern, etc.)
+  source    String?  // For session-start: startup, resume
+  reason    String?  // For session-end: prompt_input_exit, other
+  rawInput  String?  // Full JSON input for debugging
+
+  @@index([timestamp])
+  @@index([project])
+  @@index([eventType])
+}

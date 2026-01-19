@@ -1,0 +1,12 @@
+{
+  "name": "claude-status-tracker",
+  "description": "Track Claude Code activity and events to a local SQLite database for monitoring and automation",
+  "version": "1.0.0",
+  "author": {
+    "name": "kurishutofu"
+  },
+  "repository": "https://github.com/kurishutofu/claude-status-tracker",
+  "license": "MIT",
+  "keywords": ["monitoring", "logging", "events", "status", "hooks"],
+  "hooks": "./hooks/hooks.json"
+}

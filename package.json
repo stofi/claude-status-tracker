@@ -1,0 +1,51 @@
+{
+  "name": "claude-status-tracker",
+  "version": "1.0.0",
+  "description": "Track Claude Code activity and events to a local SQLite database for monitoring and automation",
+  "main": "dist/cli.js",
+  "bin": {
+    "claude-status-tracker": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc && npm run db:setup",
+    "db:setup": "node dist/setup-db.js",
+    "postinstall": "prisma generate",
+    "hook": "ts-node src/hook-handler.ts",
+    "recent": "ts-node src/recent.ts",
+    "status": "ts-node src/status.ts",
+    "clear": "ts-node src/clear.ts",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "keywords": [
+    "claude-code",
+    "plugin",
+    "monitoring",
+    "logging",
+    "events",
+    "status",
+    "hooks"
+  ],
+  "author": "kurishutofu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kurishutofu/claude-status-tracker"
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.0.9",
+    "prisma": "^7.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-better-sqlite3": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "better-sqlite3": "^12.6.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

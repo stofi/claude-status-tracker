@@ -1,0 +1,43 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ts-node /home/kurishutofu/code/claude-code-scripts/claude-status-db/src/hook-handler.ts stop"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ts-node /home/kurishutofu/code/claude-code-scripts/claude-status-db/src/hook-handler.ts notification"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ts-node /home/kurishutofu/code/claude-code-scripts/claude-status-db/src/hook-handler.ts notification"
+          }
+        ]
+      },
+      {
+        "matcher": "elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ts-node /home/kurishutofu/code/claude-code-scripts/claude-status-db/src/hook-handler.ts notification"
+          }
+        ]
+      }
+    ]
+  }
+}
