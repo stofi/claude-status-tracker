@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/stofi/claude-status-tracker/compare/v1.0.0...v1.0.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* include dist/ in repo for plugin installation ([7555bba](https://github.com/stofi/claude-status-tracker/commit/7555bba263597980fcf488d8ef4238c51be880dc))
+
 # 1.0.0 (2026-01-19)
 
 
