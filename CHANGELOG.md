@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/stofi/claude-status-tracker/compare/v1.1.1...v1.1.2) (2026-01-19)
+
+
+### Bug Fixes
+
+* auto-initialize database on first use ([e546407](https://github.com/stofi/claude-status-tracker/commit/e546407169310a072a889dc547abe1a925fc3d75))
+
 ## [1.1.1](https://github.com/stofi/claude-status-tracker/compare/v1.1.0...v1.1.1) (2026-01-19)
 
 
