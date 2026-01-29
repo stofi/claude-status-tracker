@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { prisma } from "./db";
-import * as path from "path";
 
 interface Options {
   project?: string;
@@ -38,15 +37,15 @@ function printHelp() {
 Query todos from the tracking database.
 
 Options:
-  -p, --project <name>   Filter by project name (default: current directory)
+  -p, --project <name>   Filter by project name (partial match)
   -s, --status <status>  Filter by status (pending, in_progress, completed)
   -j, --json             Output as JSON
   -h, --help             Show this help message
 
 Examples:
-  claude-status-tracker todos              Show todos for current project
-  claude-status-tracker todos -j           Show todos as JSON
-  claude-status-tracker todos -p myproj    Show todos for "myproj"
+  claude-status-tracker todos              Show all todos
+  claude-status-tracker todos -j           Show all todos as JSON
+  claude-status-tracker todos -p myproj    Show todos for projects matching "myproj"
   claude-status-tracker todos -s pending   Show only pending todos
 `);
 }
@@ -64,10 +63,11 @@ async function main() {
     return;
   }
 
-  // Default to current directory name if no project specified
-  const project = options.project || path.basename(process.cwd());
+  const where: Record<string, unknown> = {};
 
-  const where: Record<string, unknown> = { project };
+  if (options.project) {
+    where.project = { contains: options.project };
+  }
 
   if (options.status) {
     where.status = options.status;
@@ -76,27 +76,37 @@ async function main() {
   try {
     const todos = await prisma.todo.findMany({
       where,
-      orderBy: { position: "asc" },
+      orderBy: [{ project: "asc" }, { position: "asc" }],
     });
 
     if (options.json) {
-      console.log(JSON.stringify({ project, todos }, null, 2));
+      console.log(JSON.stringify(todos, null, 2));
     } else {
       if (todos.length === 0) {
-        console.log(`No todos found for project: ${project}`);
+        console.log("No todos found.");
       } else {
-        console.log(`Todos for ${project}:`);
-        console.log("");
+        // Group by project
+        const byProject = new Map<string, typeof todos>();
         for (const todo of todos) {
-          const icon =
-            todo.status === "completed"
-              ? "\u2713"
-              : todo.status === "in_progress"
-              ? "\u25B6"
-              : "\u25CB";
-          const statusLabel =
-            todo.status === "in_progress" ? "in progress" : todo.status;
-          console.log(`  ${icon} [${statusLabel}] ${todo.content}`);
+          const list = byProject.get(todo.project) || [];
+          list.push(todo);
+          byProject.set(todo.project, list);
+        }
+
+        for (const [project, projectTodos] of byProject) {
+          console.log(`[${project}]`);
+          for (const todo of projectTodos) {
+            const icon =
+              todo.status === "completed"
+                ? "\u2713"
+                : todo.status === "in_progress"
+                ? "\u25B6"
+                : "\u25CB";
+            const statusLabel =
+              todo.status === "in_progress" ? "in progress" : todo.status;
+            console.log(`  ${icon} [${statusLabel}] ${todo.content}`);
+          }
+          console.log("");
         }
       }
     }

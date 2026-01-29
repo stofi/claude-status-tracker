@@ -1,41 +1,7 @@
 #!/usr/bin/env node
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = require("./db");
-const path = __importStar(require("path"));
 function parseArgs(args) {
     const options = {
         json: false,
@@ -64,15 +30,15 @@ function printHelp() {
 Query todos from the tracking database.
 
 Options:
-  -p, --project <name>   Filter by project name (default: current directory)
+  -p, --project <name>   Filter by project name (partial match)
   -s, --status <status>  Filter by status (pending, in_progress, completed)
   -j, --json             Output as JSON
   -h, --help             Show this help message
 
 Examples:
-  claude-status-tracker todos              Show todos for current project
-  claude-status-tracker todos -j           Show todos as JSON
-  claude-status-tracker todos -p myproj    Show todos for "myproj"
+  claude-status-tracker todos              Show all todos
+  claude-status-tracker todos -j           Show all todos as JSON
+  claude-status-tracker todos -p myproj    Show todos for projects matching "myproj"
   claude-status-tracker todos -s pending   Show only pending todos
 `);
 }
@@ -86,35 +52,45 @@ async function main() {
         await db_1.prisma.$disconnect();
         return;
     }
-    // Default to current directory name if no project specified
-    const project = options.project || path.basename(process.cwd());
-    const where = { project };
+    const where = {};
+    if (options.project) {
+        where.project = { contains: options.project };
+    }
     if (options.status) {
         where.status = options.status;
     }
     try {
         const todos = await db_1.prisma.todo.findMany({
             where,
-            orderBy: { position: "asc" },
+            orderBy: [{ project: "asc" }, { position: "asc" }],
         });
         if (options.json) {
-            console.log(JSON.stringify({ project, todos }, null, 2));
+            console.log(JSON.stringify(todos, null, 2));
         }
         else {
             if (todos.length === 0) {
-                console.log(`No todos found for project: ${project}`);
+                console.log("No todos found.");
             }
             else {
-                console.log(`Todos for ${project}:`);
-                console.log("");
+                // Group by project
+                const byProject = new Map();
                 for (const todo of todos) {
-                    const icon = todo.status === "completed"
-                        ? "\u2713"
-                        : todo.status === "in_progress"
-                            ? "\u25B6"
-                            : "\u25CB";
-                    const statusLabel = todo.status === "in_progress" ? "in progress" : todo.status;
-                    console.log(`  ${icon} [${statusLabel}] ${todo.content}`);
+                    const list = byProject.get(todo.project) || [];
+                    list.push(todo);
+                    byProject.set(todo.project, list);
+                }
+                for (const [project, projectTodos] of byProject) {
+                    console.log(`[${project}]`);
+                    for (const todo of projectTodos) {
+                        const icon = todo.status === "completed"
+                            ? "\u2713"
+                            : todo.status === "in_progress"
+                                ? "\u25B6"
+                                : "\u25CB";
+                        const statusLabel = todo.status === "in_progress" ? "in progress" : todo.status;
+                        console.log(`  ${icon} [${statusLabel}] ${todo.content}`);
+                    }
+                    console.log("");
                 }
             }
         }
