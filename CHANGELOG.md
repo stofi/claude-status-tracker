@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/stofi/claude-status-tracker/compare/v1.1.2...v1.2.0) (2026-01-29)
+
+
+### Features
+
+* add Todo table with auto-migration from historical events ([b51d0eb](https://github.com/stofi/claude-status-tracker/commit/b51d0eb34888bcd642688220dfea9810130c9e86))
+
 ## [1.1.2](https://github.com/stofi/claude-status-tracker/compare/v1.1.1...v1.1.2) (2026-01-19)
 
 
