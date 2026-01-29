@@ -27,6 +27,14 @@ async function main() {
       await import("./clear");
       break;
 
+    case "todos":
+      await import("./todos");
+      break;
+
+    case "migrate-todos":
+      await import("./migrate-todos");
+      break;
+
     case "help":
     case "--help":
     case "-h":
@@ -50,7 +58,9 @@ Usage: claude-status-tracker <command> [options]
 Commands:
   recent [options]     Show recent events from the database
   status [options]     Show session status and statistics
+  todos [options]      Show todos for a project
   clear [options]      Clear old events from the database
+  migrate-todos        Migrate todos from historical events
   help                 Show this help message
 
 Hook Commands (called by Claude Code):

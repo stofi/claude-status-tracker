@@ -27,6 +27,7 @@ export declare const JsonNull: import("@prisma/client-runtime-utils").JsonNullCl
 export declare const AnyNull: import("@prisma/client-runtime-utils").AnyNullClass;
 export declare const ModelName: {
     readonly Event: "Event";
+    readonly Todo: "Todo";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -46,6 +47,17 @@ export declare const EventScalarFieldEnum: {
     readonly rawInput: "rawInput";
 };
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum];
+export declare const TodoScalarFieldEnum: {
+    readonly id: "id";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+    readonly project: "project";
+    readonly content: "content";
+    readonly status: "status";
+    readonly activeForm: "activeForm";
+    readonly position: "position";
+};
+export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";

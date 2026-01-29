@@ -24,3 +24,8 @@ export { Prisma };
  *
  */
 export type Event = Prisma.EventModel;
+/**
+ * Model Todo
+ *
+ */
+export type Todo = Prisma.TodoModel;

@@ -122,5 +122,16 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get event(): Prisma.EventDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    /**
+     * `prisma.todo`: Exposes CRUD operations for the **Todo** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Todos
+      * const todos = await prisma.todo.findMany()
+      * ```
+      */
+    get todo(): Prisma.TodoDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;

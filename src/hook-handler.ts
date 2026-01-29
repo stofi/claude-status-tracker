@@ -2,6 +2,13 @@
 import { prisma } from "./db";
 import * as path from "path";
 
+// Todo item from TodoWrite tool
+interface TodoItem {
+  content: string;
+  status: "pending" | "in_progress" | "completed";
+  activeForm: string;
+}
+
 // Hook input format from Claude Code plugin system
 interface HookInput {
   session_id?: string;
@@ -17,6 +24,8 @@ interface HookInput {
     description?: string;
     query?: string;
     url?: string;
+    // TodoWrite
+    todos?: TodoItem[];
   };
   tool_use_id?: string;
   // UserPromptSubmit
@@ -30,6 +39,36 @@ interface HookInput {
   // Notification
   message?: string;
   notification_type?: string;
+}
+
+/**
+ * Save todos from a TodoWrite event to the database
+ */
+async function saveTodos(project: string, todos: TodoItem[]): Promise<void> {
+  // Validate todos
+  const validTodos = todos.filter(
+    (t) =>
+      typeof t.content === "string" &&
+      typeof t.status === "string" &&
+      ["pending", "in_progress", "completed"].includes(t.status) &&
+      typeof t.activeForm === "string"
+  );
+
+  if (validTodos.length === 0) return;
+
+  // Delete existing todos for this project and insert new ones
+  await prisma.$transaction(async (tx) => {
+    await tx.todo.deleteMany({ where: { project } });
+    await tx.todo.createMany({
+      data: validTodos.map((todo, index) => ({
+        project,
+        content: todo.content,
+        status: todo.status,
+        activeForm: todo.activeForm,
+        position: index,
+      })),
+    });
+  });
 }
 
 async function main() {
@@ -104,6 +143,15 @@ async function main() {
         case "WebFetch":
           action = "Fetch URL";
           detail = toolInput.url?.substring(0, 500) || null;
+          break;
+        case "TodoWrite":
+          action = "Update todos";
+          const todoCount = toolInput.todos?.length || 0;
+          detail = `${todoCount} todo${todoCount !== 1 ? "s" : ""}`;
+          // Save todos to the database
+          if (toolInput.todos && toolInput.todos.length > 0) {
+            await saveTodos(project, toolInput.todos);
+          }
           break;
         default:
           action = `Tool: ${tool}`;

@@ -232,6 +232,7 @@ export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>;
 type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>;
 export declare const ModelName: {
     readonly Event: "Event";
+    readonly Todo: "Todo";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<{
@@ -244,7 +245,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "event";
+        modelProps: "event" | "todo";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -322,6 +323,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        Todo: {
+            payload: Prisma.$TodoPayload<ExtArgs>;
+            fields: Prisma.TodoFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.TodoFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.TodoFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>;
+                };
+                findFirst: {
+                    args: Prisma.TodoFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.TodoFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>;
+                };
+                findMany: {
+                    args: Prisma.TodoFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>[];
+                };
+                create: {
+                    args: Prisma.TodoCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>;
+                };
+                createMany: {
+                    args: Prisma.TodoCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.TodoCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>[];
+                };
+                delete: {
+                    args: Prisma.TodoDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>;
+                };
+                update: {
+                    args: Prisma.TodoUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.TodoDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.TodoUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.TodoUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>[];
+                };
+                upsert: {
+                    args: Prisma.TodoUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$TodoPayload>;
+                };
+                aggregate: {
+                    args: Prisma.TodoAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateTodo>;
+                };
+                groupBy: {
+                    args: Prisma.TodoGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.TodoGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.TodoCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.TodoCountAggregateOutputType> | number;
+                };
+            };
+        };
     };
 } & {
     other: {
@@ -366,6 +441,17 @@ export declare const EventScalarFieldEnum: {
     readonly rawInput: "rawInput";
 };
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum];
+export declare const TodoScalarFieldEnum: {
+    readonly id: "id";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+    readonly project: "project";
+    readonly content: "content";
+    readonly status: "status";
+    readonly activeForm: "activeForm";
+    readonly position: "position";
+};
+export type TodoScalarFieldEnum = (typeof TodoScalarFieldEnum)[keyof typeof TodoScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";
@@ -490,6 +576,7 @@ export type PrismaClientOptions = ({
 };
 export type GlobalOmitConfig = {
     event?: Prisma.EventOmit;
+    todo?: Prisma.TodoOmit;
 };
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';
 export type LogDefinition = {

@@ -55,6 +55,12 @@ async function main() {
         case "clear":
             await Promise.resolve().then(() => __importStar(require("./clear")));
             break;
+        case "todos":
+            await Promise.resolve().then(() => __importStar(require("./todos")));
+            break;
+        case "migrate-todos":
+            await Promise.resolve().then(() => __importStar(require("./migrate-todos")));
+            break;
         case "help":
         case "--help":
         case "-h":
@@ -76,7 +82,9 @@ Usage: claude-status-tracker <command> [options]
 Commands:
   recent [options]     Show recent events from the database
   status [options]     Show session status and statistics
+  todos [options]      Show todos for a project
   clear [options]      Clear old events from the database
+  migrate-todos        Migrate todos from historical events
   help                 Show this help message
 
 Hook Commands (called by Claude Code):

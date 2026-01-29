@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.SortOrder = exports.EventScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.SortOrder = exports.TodoScalarFieldEnum = exports.EventScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -75,7 +75,8 @@ exports.JsonNull = runtime.JsonNull;
  */
 exports.AnyNull = runtime.AnyNull;
 exports.ModelName = {
-    Event: 'Event'
+    Event: 'Event',
+    Todo: 'Todo'
 };
 /*
  * Enums
@@ -94,6 +95,16 @@ exports.EventScalarFieldEnum = {
     source: 'source',
     reason: 'reason',
     rawInput: 'rawInput'
+};
+exports.TodoScalarFieldEnum = {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    project: 'project',
+    content: 'content',
+    status: 'status',
+    activeForm: 'activeForm',
+    position: 'position'
 };
 exports.SortOrder = {
     asc: 'asc',

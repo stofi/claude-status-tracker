@@ -26,3 +26,18 @@ model Event {
   @@index([project])
   @@index([eventType])
 }
+
+model Todo {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  project    String
+  content    String
+  status     String   // pending, in_progress, completed
+  activeForm String
+  position   Int      @default(0)
+
+  @@index([project])
+  @@index([status])
+  @@unique([project, content])
+}

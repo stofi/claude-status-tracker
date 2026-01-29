@@ -36,6 +36,31 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = require("./db");
 const path = __importStar(require("path"));
+/**
+ * Save todos from a TodoWrite event to the database
+ */
+async function saveTodos(project, todos) {
+    // Validate todos
+    const validTodos = todos.filter((t) => typeof t.content === "string" &&
+        typeof t.status === "string" &&
+        ["pending", "in_progress", "completed"].includes(t.status) &&
+        typeof t.activeForm === "string");
+    if (validTodos.length === 0)
+        return;
+    // Delete existing todos for this project and insert new ones
+    await db_1.prisma.$transaction(async (tx) => {
+        await tx.todo.deleteMany({ where: { project } });
+        await tx.todo.createMany({
+            data: validTodos.map((todo, index) => ({
+                project,
+                content: todo.content,
+                status: todo.status,
+                activeForm: todo.activeForm,
+                position: index,
+            })),
+        });
+    });
+}
 async function main() {
     const eventType = process.argv[2];
     if (!eventType) {
@@ -102,6 +127,15 @@ async function main() {
                 case "WebFetch":
                     action = "Fetch URL";
                     detail = toolInput.url?.substring(0, 500) || null;
+                    break;
+                case "TodoWrite":
+                    action = "Update todos";
+                    const todoCount = toolInput.todos?.length || 0;
+                    detail = `${todoCount} todo${todoCount !== 1 ? "s" : ""}`;
+                    // Save todos to the database
+                    if (toolInput.todos && toolInput.todos.length > 0) {
+                        await saveTodos(project, toolInput.todos);
+                    }
                     break;
                 default:
                     action = `Tool: ${tool}`;
