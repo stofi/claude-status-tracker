@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/stofi/claude-status-tracker/compare/v1.2.0...v1.2.1) (2026-01-29)
+
+
+### Bug Fixes
+
+* todos command returns all projects by default ([5e040ca](https://github.com/stofi/claude-status-tracker/commit/5e040caacf0f182c0e6234b699f58123565ac32e))
+
 # [1.2.0](https://github.com/stofi/claude-status-tracker/compare/v1.1.2...v1.2.0) (2026-01-29)
 
 
